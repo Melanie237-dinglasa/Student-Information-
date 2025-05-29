@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX 100 // to store 100 only students can save to file  😊
+#define MAX 100 // to store 100 only students can save to file
 #define SUBJECTS 3// to define only 3 subjects to store and save in file
-#define FILENAME "students.txt"// you can see the student information in a readable way
+#define FILENAME "students.txt"// you can see  the Student information in readable way
 
 typedef struct {
     int id;
@@ -52,9 +52,8 @@ int main() {
 }
 
 /*addStudent Accepts an array of students and the current count (passed by pointer).
- Takes input for ID, name, and grades. 
- Calls computeAverage() to calculate and store the average. 
- Increments the count after adding. */ 
+Takes input for ID, name, and grades. Calls computeAverage() to calculate and store the average.
+ Increments the count after adding. */
 
 void addStudent(Student students[], int *count) {
     Student *s = &students[*count];
@@ -77,9 +76,9 @@ void addStudent(Student students[], int *count) {
 
 /* Editing student information 😊 When you choose option 1:
  It asks for the student ID. If found, you can change the name and grades.
-  Then it recomputes the average. Changes are saved in memory, 
+ Then it recomputes the average. Changes are saved in memory,
   and later to file if you choose "Save and Exit". */
-  
+  // to define only 3 subjects to store and save in file
 void editStudent(Student students[], int count) {
     int id, found = 0;
     printf("\nEnter student ID to edit: ");
@@ -109,11 +108,10 @@ void editStudent(Student students[], int count) {
         printf("Student with ID %d not found.\n", id);
 }
 
-/*deleteStudent When you choose option 3: 
-It asks for the student ID to delete. 
-If found, that student is removed by shifting the remaining students. 
+/*deleteStudent When you choose option 3:
+It asks for the student ID to delete.
+If found, that student is removed by shifting the remaining students.
 Count is updated. Will also be saved to file after you exit and save. */
-
 void deleteStudent(Student students[], int *count) {
     int id, found = 0;
     printf("\nEnter student ID to delete: ");
@@ -135,7 +133,6 @@ void deleteStudent(Student students[], int *count) {
         printf("Student with ID %d not found.\n", id);
 }
 /* displayStudent Prints all students in a table format. Shows ID, name, grades, and average.*/
-
 void displayStudents(Student students[], int count) {
     printf("\n%-5s %-20s %-20s %-10s\n", "ID", "Name", "Grades", "Average");
     printf("--------------------------------------------------------------\n");
@@ -174,15 +171,18 @@ void saveToFile(Student students[], int count) {
 
     fclose(fp);
 }
+/* Diring dapita sa loadFromFile is to open a file in read mode.
+ Read and parses each line into the structure
+ And it updates the student array and count */
 
 void loadFromFile(Student students[], int *count) {
     FILE *fp = fopen(FILENAME, "r");
     if(fp == NULL) return;
 
-    char line[256];//Ensure safe and readable input per line
-    while(fgets(line, sizeof(line), fp)) {
-        char *token = strtok(line, "|");
-        if (token == NULL) continue;
+    char line[256];//ensure safe and readable input per line
+    while(fgets(line, sizeof(line), fp)) {// fix the line input issue that causes fgets to be skipped
+        char *token = strtok(line, "|");// more realiable parsing than fsacnf, especially with delimeters like
+        if (token == NULL) continue;//prevent crashes id data format is incorrect
         students[*count].id = atoi(token);
 
         token = strtok(NULL, "|");
@@ -204,5 +204,10 @@ void loadFromFile(Student students[], int *count) {
         (*count)++;
     }
 
-    fclose(fp);
+    fclose(fp);// to close a file
 }
+
+
+ 
+
+
